@@ -24,7 +24,7 @@ pip install flask pandas
 ### 3. Project Structure
 Your directory must look like this for the Flask templates to load correctly:
 
-'''
+```
 .
 ├──  010_source_data/
 │    └── tp_reviews.csv              # Source data
@@ -41,7 +41,7 @@ Your directory must look like this for the Flask templates to load correctly:
     ├── trust.db                     # SQLite Database (created using setup.py)
     └── templates/
         └── index.html               # Frontend Logic
-'''
+```
 
 ### 4. Database Preparation
 Navigate to the setup folder (\repo\075_setup) in your terminal and run the following to import the data, cleanse it and prepare the database for the application. The code contains a section to drop the precleansed data to save on space if this is a concern:
