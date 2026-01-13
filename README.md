@@ -26,17 +26,17 @@ Your directory must look like this for the Flask templates to load correctly:
 
 .
 └── 010_source_data/<br/>
-    └── tp_reviews.csv              # Source data<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;└── tp_reviews.csv              # Source data<br/>
 └── 050_data_review/<br/>
-    ├──Data_import_cleanse.ipynb    # A Jupyter Notebook used to review the data<br/>
+Data_import_cleanse.ipynb    # A Jupyter Notebook used to review the data<br/>
 └── 075_setup/<br/>
-    ├── app.py             			# Flask Backendv<br/>
-    └── setup.py                     # Python ETL<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;├── app.py             			# Flask Backendv<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;└── setup.py                     # Python ETL<br/>
 └── 100_prod/<br/>
-    ├── app.py                      # Flask Backend<br/>
-    ├── trust.db                    # SQLite Database (created using setup.py)<br/>
-    └── templates/<br/>
-        └── index.html              # Frontend Logic<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;├── app.py                      # Flask Backend<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;├── trust.db                    # SQLite Database (created using setup.py)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;└── templates/<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── index.html              # Frontend Logic<br/>
 
 ### 4. Database Preparation
 Navigate to the setup folder (\repo\075_setup) in your terminal and run the following to import the data, cleanse it and prepare the database for the application. The code contains a section to drop the precleansed data to save on space if this is a concern:
@@ -78,10 +78,10 @@ If results are found, a Download Full CSV button will appear. Click it to save t
 The column subsets for different views are defined in the get_query_config function within app.py. You can modify this function to add or remove columns, and adjust the order they will appear, from the export as the database schema evolves.
 
 ## 🛡️ Troubleshooting
-Site can't be reached: Ensure you are using http:// and not https://.
+**Site can't be reached**: Ensure you are using http:// and not https://.
 
 **Template Not Found**: Ensure your index.html is inside a folder named templates.
 
-Port 5000 in use: If another app is using the port, change the port in app.py (last line of code):
+**Port 5000 in use**: If another app is using the port, change the port in app.py (last line of code):
 
 app.run(debug=True, port=5001)
