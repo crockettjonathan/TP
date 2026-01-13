@@ -57,20 +57,20 @@
 </div>
 
 <script>
-    // New function to catch the Enter key
+    // function to catch the Enter key
     function handleEnter(event) {
         if (event.key === "Enter") {
             event.preventDefault(); // Prevents the page from refreshing/submitting
             fetchPreview();         // Triggers your preview logic
         }
     }
-
+	//Function to only show sub menu and adjust titles based on previous selection
     function toggleSubMenu() {
         const isUser = document.getElementById('category').value === 'User';
         document.getElementById('user-options').classList.toggle('hidden', !isUser);
         document.getElementById('search-label').innerText = isUser ? "Search Reviewer Name:" : "Search Business Name:";
     }
-
+	 //Function to bring a preview of the data to be output back to the interface
 	 async function fetchPreview() {
 		// Show loading state
 		document.getElementById('table-container').innerHTML = "<p>Searching database...</p>";
@@ -97,6 +97,7 @@
 		renderTable(result);
 
 		// --- UPDATED LOGIC HERE ---
+		// Added after index in Dataframe was being used to order columns instead of columns as defined in the app
 		// Check if rows exist in the new dictionary format
 		if (result.rows && result.rows.length > 0) {
 			document.getElementById('dl_category').value = payload.category;
