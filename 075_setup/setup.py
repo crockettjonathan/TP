@@ -33,7 +33,7 @@ tp_reviews_dedup.to_sql('sql_tp_reviews_dedup',conn,if_exists='replace',index=Fa
 
 ###optional code to drop original data if not required for reference purposes
 #cursor = conn.cursor()
-#sql_query = f"DROP TABLE IF EXISTS {sql_tp_reviews}"
+#sql_query = f"DROP TABLE IF EXISTS sql_tp_reviews"
 #cursor.execute(sql_query)
 #conn.commit()
 
