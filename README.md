@@ -26,17 +26,17 @@ Your directory must look like this for the Flask templates to load correctly:
 
 .
 └── 010_source_data/<br/>
-	└── tp_reviews.csv              # Source data<br/>
+    └── tp_reviews.csv              # Source data<br/>
 └── 050_data_review/<br/>
-	├──Data_import_cleanse.ipynb    # A Jupyter Notebook used to review the data<br/>
+    ├──Data_import_cleanse.ipynb    # A Jupyter Notebook used to review the data<br/>
 └── 075_setup/<br/>
-	├── app.py             			# Flask Backendv
-	└── setup.py                     # Python ETL<br/>
+    ├── app.py             			# Flask Backendv<br/>
+    └── setup.py                     # Python ETL<br/>
 └── 100_prod/<br/>
-	├── app.py                      # Flask Backend<br/>
-	├── trust.db                    # SQLite Database (created using setup.py)<br/>
-	└── templates/<br/>
-		└── index.html              # Frontend Logic<br/>
+    ├── app.py                      # Flask Backend<br/>
+    ├── trust.db                    # SQLite Database (created using setup.py)<br/>
+    └── templates/<br/>
+        └── index.html              # Frontend Logic<br/>
 
 ### 4. Database Preparation
 Navigate to the setup folder (\repo\075_setup) in your terminal and run the following to import the data, cleanse it and prepare the database for the application. The code contains a section to drop the precleansed data to save on space if this is a concern:
