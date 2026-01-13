@@ -2,15 +2,15 @@
 A lightweight web application built with Flask and SQLite3 (This database choice was used for simplicity, but any alterntive could be easily retrofitted in) to filter, preview, and export trustpilot review data. This tool allows users to dynamically switch between "Business" and "User" contexts, preview results in the browser, and download a custom-named CSV file.
 
 ## 🚀 Features
-** Dynamic UI **: Second-level dropdowns appear only when "User" is selected.
+**Dynamic UI**: Second-level dropdowns appear only when "User" is selected.
 
-** Live Preview **: View the top 50 results in an HTML table before downloading.
+**Live Preview**: View the top 50 results in an HTML table before downloading.
 
-** Smart Filenaming **: Exported CSVs are automatically named with a timestamp and search parameters (e.g., 20260113_153000_User_Reviews_John_Doe.csv).
+**Smart Filenaming**: Exported CSVs are automatically named with a timestamp and search parameters (e.g., 20260113_153000_User_Reviews_John_Doe.csv).
 
-** Keyboard Friendly **: Pressing Enter in the search box triggers the preview immediately.
+**Keyboard Friendly**: Pressing Enter in the search box triggers the preview immediately.
 
-** Security **: Uses parameterized SQL queries to prevent SQL injection.
+**Security**: Uses parameterized SQL queries to prevent SQL injection.
 
 ## 🛠️ Setup Instructions
 ### 1. Prerequisites
@@ -62,7 +62,7 @@ python app.py
 
 Access the Web Interface: Open your browser and navigate to: http://127.0.0.1:5000
 
-** Search & Filter **:
+**Search & Filter**:
 
 Select Business or User from the dropdown.
 
@@ -70,7 +70,7 @@ If User is selected, choose between Reviews or Account Info.
 
 Enter a name in the text box and press Enter or click Show Preview.
 
-** Export **:
+**Export**:
 
 If results are found, a Download Full CSV button will appear. Click it to save the results to your computer.
 
@@ -80,7 +80,7 @@ The column subsets for different views are defined in the get_query_config funct
 ## 🛡️ Troubleshooting
 Site can't be reached: Ensure you are using http:// and not https://.
 
-** Template Not Found **: Ensure your index.html is inside a folder named templates.
+**Template Not Found**: Ensure your index.html is inside a folder named templates.
 
 Port 5000 in use: If another app is using the port, change the port in app.py (last line of code):
 
