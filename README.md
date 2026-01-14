@@ -54,7 +54,7 @@ Your directory must look like this for the Flask templates to load correctly:
 ```
 
 ### 4. Database Preparation - Not required, included for reference
-*This step has been included to show how the database was established using the data provided. This step has already been run and the database is present in the repo read for use.*
+*This step has been included to show how the database was established using the data provided. This step has already been run and the database is present in the repo ready for use.*
 
 Navigate to the setup folder (\repo\075_setup) in your terminal and run the following to import the data, cleanse it and prepare the database for the application. The code contains a section to drop the precleansed data to save on space if this is a concern:
 
