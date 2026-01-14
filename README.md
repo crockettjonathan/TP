@@ -73,13 +73,13 @@ Review_Id
 Email_Address
 Reviewer_ID
 
-## Definitions
+## 📘 Definitions
 
 The API has 3 inputs
 
-1. category: This can be either "Business" or "User", and defines if the data is filtered on "Business_Name" or "Reviewer_Name" respectively
-2. sub_category: If category is "Business" then sub category is ignored, if category is "User" then if sub_category is "Reviews" it will out put reviews for this user, any other value and it will output Account Info.
-3. search_term: this is the value which will be searched on the relative column as defined in "category", and will do a fuzzy matching search to bring back names containing the search_term
+1. **category**: This can be either *"Business"* or *"User"*, and defines if the data is filtered on *"Business_Name"* or *"Reviewer_Name"* respectively
+2. **sub_category**: If category is *"Business"* then sub category is ignored, if category is *"User"* then if sub_category is *"Reviews"* it will out put reviews for this user, any other value and it will output Account Info.
+3. **search_term**: this is the value which will be searched on the relative column as defined in *"category"*, and will do a fuzzy matching search to bring back names containing the search_term
 
 ## 🖥 Usage
 Start the Server: Run the following command in your terminal:
