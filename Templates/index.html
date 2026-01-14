@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trustpilot Data Explorer</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f7f6; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        .hidden { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .btn-preview { background: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; }
+        .btn-download { background: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Search Trustpilot Reviews</h2>
+    <form id="searchForm">
+        <div class="form-group">
+            <label>Category:</label>
+            <select id="category" onchange="toggleSubMenu()" required>
+                <option value="Business">Business</option>
+                <option value="User">User</option>
+            </select>
+        </div>
+
+        <div id="user-options" class="form-group hidden">
+            <label>Info Type:</label>
+            <select id="sub_category">
+                <option value="Reviews">Reviews</option>
+                <option value="Account Info">Account Info</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+			<label id="search-label">Search Name:</label>
+			<input type="text" id="search_term" onkeydown="handleEnter(event)" required>
+		</div>
+
+        <button type="button" class="btn-preview" onclick="fetchPreview()">Show Preview</button>
+    </form>
+
+    <form action="/export" method="post" id="downloadForm" class="hidden">
+        <input type="hidden" name="category" id="dl_category">
+        <input type="hidden" name="sub_category" id="dl_sub_category">
+        <input type="hidden" name="search_term" id="dl_search_term">
+        <hr>
+        <p>Previewing top 50 results:</p>
+        <button type="submit" class="btn-download">Download Full CSV</button>
+    </form>
+
+    <div id="table-container"></div>
+</div>
+
+<script>
+    // function to catch the Enter key
+    function handleEnter(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevents the page from refreshing/submitting
+            fetchPreview();         // Triggers your preview logic
+        }
+    }
+	//Function to only show sub menu and adjust titles based on previous selection
+    function toggleSubMenu() {
+        const isUser = document.getElementById('category').value === 'User';
+        document.getElementById('user-options').classList.toggle('hidden', !isUser);
+        document.getElementById('search-label').innerText = isUser ? "Search Reviewer Name:" : "Search Business Name:";
+    }
+	 //Function to bring a preview of the data to be output back to the interface
+	 async function fetchPreview() {
+		// Show loading state
+		document.getElementById('table-container').innerHTML = "<p>Searching database...</p>";
+		
+		const payload = {
+			category: document.getElementById('category').value,
+			sub_category: document.getElementById('sub_category').value,
+			search_term: document.getElementById('search_term').value
+		};
+
+		const response = await fetch('/preview', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(payload)
+		});
+
+		const result = await response.json();
+
+		if (!response.ok) {
+			document.getElementById('table-container').innerHTML = `<p style="color:red;">Error: ${result.error}</p>`;
+			return;
+		}
+
+		renderTable(result);
+
+		// --- UPDATED LOGIC HERE ---
+		// Added after index in Dataframe was being used to order columns instead of columns as defined in the app
+		// Check if rows exist in the new dictionary format
+		if (result.rows && result.rows.length > 0) {
+			document.getElementById('dl_category').value = payload.category;
+			document.getElementById('dl_sub_category').value = payload.sub_category;
+			document.getElementById('dl_search_term').value = payload.search_term;
+			
+			// Make the download form visible
+			document.getElementById('downloadForm').classList.remove('hidden');
+		} else {
+			// Hide it if no results were found
+			document.getElementById('downloadForm').classList.add('hidden');
+		}
+	}
+
+	function renderTable(response) {
+		const container = document.getElementById('table-container');
+		const columns = response.columns; // This is your ordered list from app.py
+		const rows = response.rows;       // This is the data in the same order
+
+		if (!rows || rows.length === 0) {
+			container.innerHTML = "<p>No results found.</p>";
+			document.getElementById('downloadForm').classList.add('hidden');
+			return;
+		}
+
+		let html = '<table><thead><tr>';
+		
+		// Build Headers using the specific columns list
+		columns.forEach(col => {
+			html += `<th>${col.replace(/_/g, ' ')}</th>`;
+		});
+		html += '</tr></thead><tbody>';
+
+		// Build Rows - since rows are a list of lists, order is strictly preserved
+		rows.forEach(row => {
+			html += '<tr>';
+			row.forEach(cell => {
+				html += `<td>${cell !== null ? cell : ''}</td>`;
+			});
+			html += '</tr>';
+		});
+
+		html += '</tbody></table>';
+		container.innerHTML = html;
+	}
+</script>
+
+</body>
+</html>
