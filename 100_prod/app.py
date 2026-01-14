@@ -34,7 +34,7 @@ def get_query_config(category, sub_category):
         filter_col = "Reviewer_Name"
     else: # User -> Account Info
         #Account Info Order: 
-        cols = ["Reviewer_Name", "Reviewer_Country", "Email_Address", "Review_IP_Address", "Reviewer_ID"]
+        cols = ["Reviewer_Name", "Reviewer_Country", "Email_Address", "Review_IP_Address", "Reviewer_Id"]
         filter_col = "Reviewer_Name"
         
     return cols, filter_col

@@ -2,6 +2,9 @@
 A lightweight web application built with Flask and SQLite3 (This database choice was used for simplicity, but any alterntive could be easily retrofitted in) to filter, preview, and export trustpilot review data. This tool allows users to dynamically switch between "Business" and "User" contexts, preview results in the browser, and download a custom-named CSV file.
 
 ## 🚀 Features
+***Security***: Uses parameterized SQL queries to prevent SQL injection.
+
+### Frontend only features
 ***Dynamic UI***: Second-level dropdowns appear only when "User" is selected.
 
 ***Live Preview***: View the top 50 results in an HTML table before downloading.
@@ -10,7 +13,6 @@ A lightweight web application built with Flask and SQLite3 (This database choice
 
 ***Keyboard Friendly***: Pressing Enter in the search box triggers the preview immediately.
 
-***Security***: Uses parameterized SQL queries to prevent SQL injection.
 
 ## 🛠️ Setup Instructions
 ### 1. Prerequisites
@@ -21,6 +23,12 @@ Clone this repository or download the source code, then install the required dep
 
 ```
 pip install flask pandas
+```
+
+If you want to call the API via python then please also run the following:
+
+```
+pip install requests
 ```
 
 ### 3. Project Structure
@@ -41,6 +49,7 @@ Your directory must look like this for the Flask templates to load correctly:
 └── 100_prod/
     ├── app.py                       # Flask Backend
     ├── trust.db                     # SQLite Database (created using setup.py)
+	├── call.py                      # an example call of the API from Python
     └── templates/
         └── index.html               # Frontend Logic
 ```
@@ -64,12 +73,24 @@ Review_Id
 Email_Address
 Reviewer_ID
 
+## Definitions
+
+The API has 3 inputs
+
+1. category: This can be either "Business" or "User", and defines if the data is filtered on "Business_Name" or "Reviewer_Name" respectively
+2. sub_category: If category is "Business" then sub category is ignored, if category is "User" then if sub_category is "Reviews" it will out put reviews for this user, any other value and it will output Account Info.
+3. search_term: this is the value which will be searched on the relative column as defined in "category", and will do a fuzzy matching search to bring back names containing the search_term
+
 ## 🖥 Usage
 Start the Server: Run the following command in your terminal:
 
 ```
 python app.py
 ```
+
+Once running, the API be accessed via an HTML frontend (example included) or using standard HTML protocols. Below are some examples to use the API:
+
+### Example Front End
 
 Access the Web Interface: Open your browser and navigate to: http://127.0.0.1:5000
 
@@ -84,6 +105,49 @@ Enter a name in the text box and press Enter or click Show Preview.
 ***Export***:
 
 If results are found, a Download Full CSV button will appear. Click it to save the results to your computer.
+
+###Example cURL calls
+
+An example to filter for Businesses which contain "Artisan" and output Reviews to a CSV called "my_export.csv"
+```
+curl -X POST http://127.0.0.1:5000/export -d "category=Business" -d "search_term=Artisan" --output my_export.csv
+```
+
+An example to filter for Users which contain "Donna" and output Reviews to a CSV called "my_export.csv"
+```
+curl -X POST http://127.0.0.1:5000/export -d "category=User" -d "sub_category=Reviews" -d "search_term=Donna" --output my_export.csv
+```
+
+An example to filter for Users which contain "Donna" and output Account Info to a CSV called "my_export.csv"
+```
+curl -X POST http://127.0.0.1:5000/export -d "category=User" -d "sub_category=Account Info" -d "search_term=Donna" --output my_export.csv
+```
+
+##Example Python call
+
+Here is an example using the requests library to access the API, to adjust filters comment/uncomment the appropriate lines (this has been included in the 100_prod directory):
+
+```
+import requests
+
+url = "http://127.0.0.1:5000/export"
+payload = {
+    "category": "Business",
+    #"category": "User",
+    #"sub_category": "Reviews",
+    #"sub_category": "Account Info",
+    "search_term": "Artisan"
+}
+
+response = requests.post(url, data=payload)
+
+if response.status_code == 200:
+    with open("automated_export.csv", "wb") as f:
+        f.write(response.content)
+    print("Download complete!")
+else:
+    print(f"Error: {response.status_code}")
+```
 
 ## 📝 Configuration Note
 The column subsets for different views are defined in the get_query_config function within app.py. You can modify this function to add or remove columns, and adjust the order they will appear, from the export as the database schema evolves.
