@@ -7,7 +7,7 @@ import sqlite3
 current_dir = Path(__file__).resolve().parent
 
 # define connection to DB
-db_path = current_dir.parent / "100_prod" / "trust.db"
+db_path = current_dir.parent / "trust.db"
 conn=sqlite3.connect(db_path)
 
 #Close connection to the DB

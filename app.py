@@ -10,7 +10,8 @@ from pathlib import Path
 current_dir = Path.cwd()
 
 #define connection to DB
-db_path = current_dir.parent / "100_prod" / "trust.db"
+base_dir = Path(__file__).resolve().parent;
+db_path = base_dir / "trust.db"
 
 app = Flask(__name__)
 

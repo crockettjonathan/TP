@@ -36,6 +36,9 @@ Your directory must look like this for the Flask templates to load correctly:
 
 ```
 .
+├── app.py                           # Flask Backend
+├── trust.db                         # SQLite Database (created using setup.py)
+├── call.py                          # an example call of the API from Python
 ├──  010_source_data/
 │    └── tp_reviews.csv              # Source data
 │
@@ -46,15 +49,13 @@ Your directory must look like this for the Flask templates to load correctly:
 │    ├── db_dc.py                    # Close DB connection
 │    └── setup.py                    # Python ETL
 │
-└── 100_prod/
-    ├── app.py                       # Flask Backend
-    ├── trust.db                     # SQLite Database (created using setup.py)
-	├── call.py                      # an example call of the API from Python
-    └── templates/
-        └── index.html               # Frontend Logic
+└── templates/
+     └── index.html                  # Frontend Logic
 ```
 
-### 4. Database Preparation
+### 4. Database Preparation - Not required, included for reference
+*This step has been included to show how the database was established using the data provided. This step has already been run and the database is present in the repo read for use.*
+
 Navigate to the setup folder (\repo\075_setup) in your terminal and run the following to import the data, cleanse it and prepare the database for the application. The code contains a section to drop the precleansed data to save on space if this is a concern:
 
 ```
@@ -82,7 +83,7 @@ The API has 3 inputs
 3. **search_term**: this is the value which will be searched on the relative column as defined in *"category"*, and will do a fuzzy matching search to bring back names containing the search_term
 
 ## 🖥 Usage
-Start the Server: Run the following command in your terminal:
+Start the Server: Run the following command in your terminal from the repo:
 
 ```
 python app.py
@@ -125,7 +126,7 @@ curl -X POST http://127.0.0.1:5000/export -d "category=User" -d "sub_category=Ac
 
 ### Example Python call
 
-Here is an example using the requests library to access the API, to adjust filters comment/uncomment the appropriate lines (this has been included in the 100_prod directory):
+Here is an example using the requests library to access the API, to adjust filters comment/uncomment the appropriate lines (this has been included in the base directory):
 
 ```
 import requests

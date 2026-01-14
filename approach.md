@@ -17,5 +17,7 @@ I then developed example calls for cURL and Python for additional use cases for 
 
 The preview and output were using the index of the columns as opposed to the order I had specified in the Python. This was an easy enough fix in Python to generate the columns in the required order with a defined List, but I had issues with this still not lining up in the UI preview. Javascript is not my forte so I used Gemini to identify the issue which was with the javascript processing being cached, so it provided logic to allow the order to be forced. As a by product of this the download CSV button no longer showed up due to the previous code only showing the button when the preview had results, whose method was no longer compatible with the changes to force the order of the columns. Gemini again provided the fix to still provide the functionality, but with compatibility on the new logic to order the columns correctly.
 
+After testing on a seperate environment some of the folder structure and path logic was updated to allow for the app to be called in different locations
+
 # Notes: 
 I use the pathlib libarary throughout to allow for data and scripts to be stored in sibling directories, but then referenced without hardcoding paths for transportability.
