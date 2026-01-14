@@ -1,4 +1,5 @@
 import requests
+import re
 
 url = "http://127.0.0.1:5000/export"
 payload = {
@@ -12,8 +13,12 @@ payload = {
 response = requests.post(url, data=payload)
 
 if response.status_code == 200:
-    with open("automated_export.csv", "wb") as f:
+    # Get filename from the Content-Disposition header
+    d = response.headers.get('content-disposition')
+    fname = re.findall("filename=(.+)", d)[0]
+    
+    with open(fname, "wb") as f:
         f.write(response.content)
-    print("Download complete!")
+    print(f"Saved as: {fname}")
 else:
     print(f"Error: {response.status_code}")
