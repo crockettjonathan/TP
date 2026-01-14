@@ -106,7 +106,7 @@ Enter a name in the text box and press Enter or click Show Preview.
 
 If results are found, a Download Full CSV button will appear. Click it to save the results to your computer.
 
-###Example cURL calls
+### Example cURL calls
 
 An example to filter for Businesses which contain "Artisan" and output Reviews to a CSV called "my_export.csv"
 ```
@@ -123,7 +123,7 @@ An example to filter for Users which contain "Donna" and output Account Info to 
 curl -X POST http://127.0.0.1:5000/export -d "category=User" -d "sub_category=Account Info" -d "search_term=Donna" --output my_export.csv
 ```
 
-##Example Python call
+### Example Python call
 
 Here is an example using the requests library to access the API, to adjust filters comment/uncomment the appropriate lines (this has been included in the 100_prod directory):
 
