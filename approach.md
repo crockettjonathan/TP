@@ -19,5 +19,9 @@ The preview and output were using the index of the columns as opposed to the ord
 
 After testing on a seperate environment some of the folder structure and path logic was updated to allow for the app to be called in different locations
 
+# Considerations and choices:
+
+When deciding on a mechanism to run I considered if simplicity for reviewer, or real world application should be prioritised. By this I mean if the application should be called in a shell script which checks for dependencies and installs them each time the application is initiated. This adds convenience by not having to install the supporting libraries, however they are single instance tasks. So I seperated out these steps, so that they don't run redundantly each time the application is started following initial setup. I see this as back end performance over convenience.
+
 # Notes: 
 I use the pathlib libarary throughout to allow for data and scripts to be stored in sibling directories, but then referenced without hardcoding paths for transportability.
